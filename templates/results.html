@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Analysis Results</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/functions.js" defer></script>
+</head>
+<body>
+
+    <div class="results-container">
+        <h1>Email Analysis Results</h1>
+
+        <!-- Section for email headers -->
+        <section class="headers-section">
+            <h2>Email Headers</h2>
+            <table class="results-table">
+                <thead>
+                    <tr><th>Header</th><th>Value</th></tr>
+                </thead>
+                <tbody>
+                    {% for key, value in headers.items() %}
+                        <tr>
+                            <td>{{ key }}</td>
+                            <td>{{ value }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section for extracted IOCs -->
+        <section class="iocs-section">
+            <h2>Extracted IOCs</h2>
+            <table class="results-table">
+                <thead>
+                    <tr><th>Type</th><th>Values</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>URLs</td>
+                        <td>{{ iocs.urls | join(", ") }}</td>
+                    </tr>
+                    <tr>
+                        <td>IP Addresses</td>
+                        <td>{{ iocs.ips | join(", ") }}</td>
+                    </tr>
+                    <tr>
+                        <td>Domains</td>
+                        <td>{{ iocs.domains | join(", ") }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section for SPF, DMARC, DKIM Check Results -->
+        <section class="spf-dmarc-dkim-section">
+            <h2>SPF, DMARC, DKIM Results</h2>
+            <table class="results-table">
+                <thead>
+                    <tr><th>Check</th><th>Result</th></tr>
+                </thead>
+                <tbody>
+                    <!-- Display SPF Result -->
+                    <tr>
+                        <td>SPF Record</td>
+                        <td>{{ spf_record }}</td>
+                    </tr>
+                    <!-- Display DMARC Result -->
+                    <tr>
+                        <td>DMARC Record</td>
+                        <td>{{ dmarc_record }}</td>
+                    </tr>
+                    <!-- Display DKIM Result -->
+                    <tr>
+                        <td>DKIM Record</td>
+                        <td>{{ dkim_record }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section for VirusTotal Results -->
+        <section class="virustotal-section">
+            <h2>VirusTotal Results</h2>
+
+            <!-- Handle Error Results -->
+            {% if results.error %}
+                <div class="result-block error">
+                    <h3>Error</h3>
+                    <pre class="result-pre">{{ results.error | tojson }}</pre>
+                </div>
+            {% endif %}
+
+            <!-- Handle VirusTotal Detailed Results -->
+            {% for key, result in results.items() %}
+                {% if key != 'error' %}
+                    {% if result is string %}
+                        <div class="result-block error">
+                            <h3>{{ key | capitalize }}</h3>
+                            <pre>{{ result }}</pre>
+                        </div>
+                    {% else %}
+                        <div class="result-block">
+                            <h3>{{ key | capitalize }}</h3>
+
+                            {% if result.data %}
+                                <div class="result-details">
+                                    <strong>Creation Date:</strong> {{ result.data.attributes.creation_date | date("Y-m-d H:i") }}<br>
+                                    <strong>Last Analysis Date:</strong> {{ result.data.attributes.last_analysis_date | date("Y-m-d H:i") }}<br>
+
+                                    <h4>Last Analysis Results:</h4>
+                                    <ul>
+                                        {% for engine, analysis in result.data.attributes.last_analysis_results.items() %}
+                                            <li>
+                                                <strong>{{ engine }}:</strong>
+                                                <span>{{ analysis.result }}</span>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+
+                                    <h4>Categories:</h4>
+                                    <ul>
+                                        {% for category, value in result.data.attributes.categories.items() %}
+                                            <li>
+                                                <strong>{{ category }}:</strong> {{ value }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% else %}
+                                {% if result.error and result.error.code == "NotFoundError" %}
+                                    <div class="result-block error">
+                                        <h3>Resource Not Found</h3>
+                                        <p>The resource you are trying to analyze is either not found or hasn't been analyzed by VirusTotal yet.</p>
+                                    </div>
+                                {% else %}
+                                    <div class="result-block error">
+                                        <h3>Invalid Result Data</h3>
+                                        <pre>{{ result | tojson }}</pre>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </section>
+
+        <!-- Action buttons -->
+        <button id="export-csv" onclick="exportToCSV()">Export to CSV</button>
+        <button id="export-html" onclick="exportToHTML()">Export to HTML</button>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,363 @@
+/* General body styles */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Header */
+h1, h2, h3 {
+    color: #0056b3;
+    text-align: center;
+    margin-top: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 2rem;
+}
+
+/* Main container */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Header checks section */
+.header-checks, .ioc-results {
+    margin-top: 20px;
+    background-color: #fafafa;
+    border-radius: 10px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.95rem;
+}
+
+/* Table header */
+th {
+    background: linear-gradient(90deg, #0056b3, #3498db);
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Table data */
+td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+    word-break: break-word;
+}
+
+/* Zebra striping for table rows */
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #e8f5ff;
+}
+
+/* Color codes for passed/failed checks */
+.passed {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.failed {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+/* Spoofing warning */
+.spoofing-warning {
+    color: #e74c3c;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    font-size: 1.1rem;
+}
+
+/* IOC items display */
+.ioc-item {
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    padding: 5px;
+    background-color: #f4f4f9;
+    border-left: 4px solid #3498db;
+    border-radius: 5px;
+}
+
+/* Button styles */
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-top: 15px;
+    font-size: 1rem;
+    transition: background 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: linear-gradient(90deg, #2980b9, #1f6396);
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    table {
+        font-size: 0.85rem;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Tooltip styles */
+.btn-tooltip {
+    position: relative;
+}
+
+.btn-tooltip:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+/* Button styles for forms and secondary buttons */
+button, .button {
+    margin: 5px;
+    padding: 10px 15px;
+    border: none;
+    background-color: #3498db;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover, .button:hover {
+    background-color: #2980b9;
+}
+
+.button-secondary {
+    background-color: #95a5a6;
+}
+
+.button-secondary:hover {
+    background-color: #7f8c8d;
+}
+
+/* Results container */
+.results-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.result-block {
+    margin: 15px 0;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-left: 5px solid #2e7d32;
+}
+
+.result-block.error {
+    border-left-color: #d32f2f;
+    background-color: #ffebee;
+}
+
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+.actions-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+/* Additional Styling for VirusTotal Result Blocks */
+.result-details {
+    margin-top: 10px;
+}
+
+.result-details strong {
+    color: #333;
+}
+
+.result-details ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.result-details ul li {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+h4 {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #555;
+}
+
+h3 {
+    font-size: 18px;
+    color: #333;
+}
+
+/* Error Container */
+.error-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 100px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.error-header h1 {
+    font-size: 32px;
+    color: #f44336;
+    margin-bottom: 10px;
+}
+
+.error-header p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.error-body h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.error-body p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.error-actions .error-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    margin: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.error-actions .error-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.error-actions .error-btn:active {
+    transform: translateY(0);
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+    .error-container {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .error-header h1 {
+        font-size: 28px;
+    }
+
+    .error-header p {
+        font-size: 16px;
+    }
+
+    .error-body h3 {
+        font-size: 22px;
+    }
+
+    .error-body p {
+        font-size: 14px;
+    }
+}

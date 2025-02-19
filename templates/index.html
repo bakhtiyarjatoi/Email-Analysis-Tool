@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Analysis Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='functions.js') }}"></script>
+</head>
+<body>
+    <!-- Tool Title -->
+    <h2>Email Analysis Tool</h2>
+    <p>An advanced tool for analyzing email headers, extracting IOCs, and verifying them with VirusTotal and MXToolbox APIs.</p>
+
+    <!-- Form for uploading files -->
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <label for="file"><strong>Choose .eml or .txt file:</strong></label>
+        <input type="file" id="file" name="file" accept=".eml, .txt" required>
+        <button type="submit">Analyze Email</button>
+        <button type="button" onclick="checkEmailHeaders()" id="check-email-headers-btn">Check Email Headers</button>
+        <label for="emailHeaders"><strong>Paste Email Headers:</strong></label>
+        <textarea id="emailHeaders" name="emailHeaders" rows="6" style="width: 100%;" placeholder="Paste raw email headers here..."></textarea>
+    </form>
+
+<!-- Display Headers Section -->
+<div class="headers-section" style="display: none;">
+    <h3>Email Headers:</h3>
+    <ul id="headers-list"></ul>
+</div>
+</body>
+</html>
